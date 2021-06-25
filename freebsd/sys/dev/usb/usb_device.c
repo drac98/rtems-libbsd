@@ -28,6 +28,10 @@
  * SUCH DAMAGE.
  */
 
+#ifdef __rtems__
+#include <rtems/bsd/modules.h>
+#endif
+
 #ifdef USB_GLOBAL_INCLUDE_FILE
 #include USB_GLOBAL_INCLUDE_FILE
 #else
@@ -123,7 +127,7 @@ int	usb_template = USB_TEMPLATE;
 int	usb_template = -1;
 #endif
 
-#ifndef __rtems__
+#if !defined(__rtems__) || defined(RTEMS_BSD_MODULE_DEV_USB_TEMPLATE)
 SYSCTL_PROC(_hw_usb, OID_AUTO, template,
     CTLTYPE_INT | CTLFLAG_RWTUN | CTLFLAG_MPSAFE,
     NULL, 0, sysctl_hw_usb_template,
@@ -255,7 +259,7 @@ sysctl_hw_usb_template(SYSCTL_HANDLER_ARGS)
 
 	return (0);
 }
-#endif /* __rtems__ */
+#endif /* !__rtmes__ || RTEMS_BSD_MODULE_DEV_USB_TEMPLATE */
 
 /* English is default language */
 

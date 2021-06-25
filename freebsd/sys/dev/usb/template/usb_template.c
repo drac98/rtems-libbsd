@@ -1433,12 +1433,15 @@ usb_temp_setup_by_index(struct usb_device *udev, uint16_t index)
 	usb_error_t err;
 
 	switch (index) {
+#ifndef __rtems__
 	case USB_TEMP_MSC:
 		err = usb_temp_setup(udev, &usb_template_msc);
 		break;
+#endif /* __rtems__ */
 	case USB_TEMP_CDCE:
 		err = usb_temp_setup(udev, &usb_template_cdce);
 		break;
+#ifndef __rtems__
 	case USB_TEMP_MTP:
 		err = usb_temp_setup(udev, &usb_template_mtp);
 		break;
@@ -1469,6 +1472,7 @@ usb_temp_setup_by_index(struct usb_device *udev, uint16_t index)
 	case USB_TEMP_CDCEEM:
 		err = usb_temp_setup(udev, &usb_template_cdceem);
 		break;
+#endif /* __rtems__ */
 	default:
 		return (USB_ERR_INVAL);
 	}
