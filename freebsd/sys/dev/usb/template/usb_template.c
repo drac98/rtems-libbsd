@@ -1433,42 +1433,46 @@ usb_temp_setup_by_index(struct usb_device *udev, uint16_t index)
 	usb_error_t err;
 
 	switch (index) {
-	// case USB_TEMP_MSC:
-	// 	err = usb_temp_setup(udev, &usb_template_msc);
-	// 	break;
+#ifndef __rtems__
+	case USB_TEMP_MSC:
+		err = usb_temp_setup(udev, &usb_template_msc);
+		break;
+#endif
 	case USB_TEMP_CDCE:
 		err = usb_temp_setup(udev, &usb_template_cdce);
 		break;
-	// case USB_TEMP_MTP:
-	// 	err = usb_temp_setup(udev, &usb_template_mtp);
-	// 	break;
-	// case USB_TEMP_MODEM:
-	// 	err = usb_temp_setup(udev, &usb_template_modem);
-	// 	break;
-	// case USB_TEMP_AUDIO:
-	// 	err = usb_temp_setup(udev, &usb_template_audio);
-	// 	break;
-	// case USB_TEMP_KBD:
-	// 	err = usb_temp_setup(udev, &usb_template_kbd);
-	// 	break;
-	// case USB_TEMP_MOUSE:
-	// 	err = usb_temp_setup(udev, &usb_template_mouse);
-	// 	break;
-	// case USB_TEMP_PHONE:
-	// 	err = usb_temp_setup(udev, &usb_template_phone);
-	// 	break;
-	// case USB_TEMP_SERIALNET:
-	// 	err = usb_temp_setup(udev, &usb_template_serialnet);
-	// 	break;
-	// case USB_TEMP_MIDI:
-	// 	err = usb_temp_setup(udev, &usb_template_midi);
-	// 	break;
-	// case USB_TEMP_MULTI:
-	// 	err = usb_temp_setup(udev, &usb_template_multi);
-	// 	break;
-	// case USB_TEMP_CDCEEM:
-	// 	err = usb_temp_setup(udev, &usb_template_cdceem);
-	// 	break;
+#ifndef __rtems__
+	case USB_TEMP_MTP:
+		err = usb_temp_setup(udev, &usb_template_mtp);
+		break;
+	case USB_TEMP_MODEM:
+		err = usb_temp_setup(udev, &usb_template_modem);
+		break;
+	case USB_TEMP_AUDIO:
+		err = usb_temp_setup(udev, &usb_template_audio);
+		break;
+	case USB_TEMP_KBD:
+		err = usb_temp_setup(udev, &usb_template_kbd);
+		break;
+	case USB_TEMP_MOUSE:
+		err = usb_temp_setup(udev, &usb_template_mouse);
+		break;
+	case USB_TEMP_PHONE:
+		err = usb_temp_setup(udev, &usb_template_phone);
+		break;
+	case USB_TEMP_SERIALNET:
+		err = usb_temp_setup(udev, &usb_template_serialnet);
+		break;
+	case USB_TEMP_MIDI:
+		err = usb_temp_setup(udev, &usb_template_midi);
+		break;
+	case USB_TEMP_MULTI:
+		err = usb_temp_setup(udev, &usb_template_multi);
+		break;
+	case USB_TEMP_CDCEEM:
+		err = usb_temp_setup(udev, &usb_template_cdceem);
+		break;
+#endif
 	default:
 		return (USB_ERR_INVAL);
 	}
