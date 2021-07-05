@@ -1163,6 +1163,30 @@ class dev_usb_storage(builder.Module):
         )
 
 #
+# USB Template
+#
+class dev_usb_template(builder.Module):
+
+    def __init__(self, manager):
+        super(dev_usb_template, self).__init__(manager, type(self).__name__)
+
+    def generate(self):
+        mm = self.manager
+        self.addDependency('dev_usb')
+        self.addKernelSpaceHeaderFiles(
+            [
+                'sys/dev/usb/template/usb_template.h',
+            ]
+        )
+        self.addKernelSpaceSourceFiles(
+            [
+                'sys/dev/usb/template/usb_template.c',
+                'sys/dev/usb/template/usb_template_cdce.c',
+            ],
+            mm.generator['source']()
+        )
+
+#
 # BBB USB
 #
 class dev_usb_controller_bbb(builder.Module):
@@ -5480,6 +5504,7 @@ def load(mm):
 
     mm.addModule(cam(mm))
     mm.addModule(dev_usb_storage(mm))
+    mm.addModule(dev_usb_template(mm))
     mm.addModule(dev_usb_controller_bbb(mm))
 
     mm.addModule(net(mm))
