@@ -283,6 +283,15 @@ extern "C" {
 #endif /* RTEMS_BSD_DRIVER_USB_MASS */
 
 /*
+ * USB Template base driver.
+ */
+#if !defined(RTEMS_BSD_DRIVER_USB_TEMPLATE)
+  #define RTEMS_BSD_DRIVER_USB_TEMPLATE           \
+    SYSINIT_REFERENCE(usb_temp_init);             \
+    SYSINIT_DRIVER_REFERENCE(usb_template, usb)
+#endif /* RTEMS_BSD_DRIVER_USB_TEMPLATE */
+
+/*
  * USB SAF1761 host controller driver.
  */
 #if !defined(RTEMS_BSD_DRIVER_USB_SAF1761_OTG)
@@ -489,6 +498,14 @@ extern "C" {
   #define RTEMS_BSD_DRIVER_PCI_RE                 \
     SYSINIT_DRIVER_REFERENCE(re, pci);
 #endif /* RTEMS_BSD_DRIVER_PCI_RE */
+
+/*
+ * CDC Ethernet Driver.
+ */
+#if !defined(RTEMS_BSD_DRIVER_CDCE)
+  #define RTEMS_BSD_DRIVER_CDCE                   \
+    SYSINIT_DRIVER_REFERENCE(cdce, uhub);
+#endif /* RTEMS_BSD_DRIVER_FEC */
 
 /**
  ** MMI Physical Layer Support.
