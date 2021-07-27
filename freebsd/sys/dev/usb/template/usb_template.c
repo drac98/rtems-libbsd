@@ -1445,9 +1445,11 @@ usb_temp_setup_by_index(struct usb_device *udev, uint16_t index)
 	case USB_TEMP_MTP:
 		err = usb_temp_setup(udev, &usb_template_mtp);
 		break;
+#endif /* __rtems__ */
 	case USB_TEMP_MODEM:
 		err = usb_temp_setup(udev, &usb_template_modem);
 		break;
+#ifndef __rtems__
 	case USB_TEMP_AUDIO:
 		err = usb_temp_setup(udev, &usb_template_audio);
 		break;
