@@ -5279,6 +5279,7 @@
 #define	usbd_do_request_proc _bsd_usbd_do_request_proc
 #define	usbd_dummy_timeout _bsd_usbd_dummy_timeout
 #define	usb_debug _bsd_usb_debug
+#define	usb_decode_str_desc _bsd_usb_decode_str_desc
 #define	usbd_enum_is_locked _bsd_usbd_enum_is_locked
 #define	usbd_enum_lock _bsd_usbd_enum_lock
 #define	usbd_enum_lock_sig _bsd_usbd_enum_lock_sig
@@ -5515,8 +5516,12 @@
 #define	usb_suspend_resume _bsd_usb_suspend_resume
 #define	usb_temp_get_desc_p _bsd_usb_temp_get_desc_p
 #define	usb_template _bsd_usb_template
+#define	usb_template_cdce _bsd_usb_template_cdce
+#define	usb_temp_setup _bsd_usb_temp_setup
 #define	usb_temp_setup_by_index_p _bsd_usb_temp_setup_by_index_p
+#define	usb_temp_sysctl _bsd_usb_temp_sysctl
 #define	usb_temp_unload _bsd_usb_temp_unload
+#define	usb_temp_unsetup _bsd_usb_temp_unsetup
 #define	usb_temp_unsetup_p _bsd_usb_temp_unsetup_p
 #define	usb_test_quirk _bsd_usb_test_quirk
 #define	usb_test_quirk_p _bsd_usb_test_quirk_p
