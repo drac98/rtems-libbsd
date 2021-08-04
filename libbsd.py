@@ -1182,6 +1182,7 @@ class dev_usb_template(builder.Module):
             [
                 'sys/dev/usb/template/usb_template.c',
                 'sys/dev/usb/template/usb_template_cdce.c',
+                'sys/dev/usb/template/usb_template_modem.c',
             ],
             mm.generator['source']()
         )
