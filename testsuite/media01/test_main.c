@@ -53,6 +53,8 @@
 #include <rtems/shell.h>
 #include <rtems/telnetd.h>
 
+#include <sys/sysctl.h>
+
 #include "pattern-test.h"
 
 #define TEST_NAME "LIBBSD MEDIA 1"
@@ -147,6 +149,9 @@ rtems_telnetd_config_table rtems_telnetd_config = {
 static void
 test_main(void)
 {
+	int template = 3;
+	sysctlbyname("hw.usb.template", NULL, NULL, &template, sizeof(template));
+
 	int rv;
 	rtems_status_code sc;
 
@@ -162,6 +167,10 @@ test_main(void)
 	assert(sc == RTEMS_SUCCESSFUL);
 
 	sc = rtems_shell_init("SHLL", 16 * 1024, 1, CONSOLE_DEVICE_NAME,
+	    false, true, NULL);
+	assert(sc == RTEMS_SUCCESSFUL);
+	
+	sc = rtems_shell_init("SRL", 16 * 1024, 1, "/dev/ttyU0",
 	    false, true, NULL);
 	assert(sc == RTEMS_SUCCESSFUL);
 
