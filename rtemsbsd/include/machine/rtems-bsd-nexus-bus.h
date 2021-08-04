@@ -52,6 +52,7 @@
  *   RTEMS_BSD_DRIVER_USB_MASS
  *   RTEMS_BSD_DRIVER_USB_TEMPLATE
  *   RTEMS_BSD_DRIVER_CDCE
+ *   RTEMS_BSD_DRIVER_MODEM
  *
  *  Networking:
  *   RTEMS_BSD_DRIVER_SMC0
@@ -289,8 +290,8 @@ extern "C" {
  */
 #if !defined(RTEMS_BSD_DRIVER_USB_TEMPLATE)
   #define RTEMS_BSD_DRIVER_USB_TEMPLATE           \
-    SYSINIT_REFERENCE(usb_temp_init);             \
-    SYSINIT_DRIVER_REFERENCE(usb_template, usb)
+    SYSINIT_REFERENCE(usb_temp_init);              \
+    SYSINIT_DRIVER_REFERENCE(usb_template, usb);
 #endif /* RTEMS_BSD_DRIVER_USB_TEMPLATE */
 
 /*
@@ -508,6 +509,17 @@ extern "C" {
   #define RTEMS_BSD_DRIVER_CDCE                   \
     SYSINIT_DRIVER_REFERENCE(cdce, uhub);
 #endif /* RTEMS_BSD_DRIVER_CDCE */
+
+/*
+ * CDC Serial Port Driver.
+ */
+#if !defined(RTEMS_BSD_DRIVER_MODEM)
+  #define RTEMS_BSD_DRIVER_MODEM                  \
+    SYSINIT_REFERENCE(modem_init);                \
+    SYSINIT_REFERENCE(ucom_init);                 \
+    SYSINIT_DRIVER_REFERENCE(ucom, usb);          \
+    SYSINIT_DRIVER_REFERENCE(umodem, uhub);
+#endif /* RTEMS_BSD_DRIVER_MODEM */
 
 /**
  ** MMI Physical Layer Support.
