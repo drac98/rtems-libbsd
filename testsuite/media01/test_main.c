@@ -60,6 +60,41 @@
 #define TEST_NAME "LIBBSD MEDIA 1"
 #define TEST_STATE_USER_INPUT 1
 
+#include <sys/stat.h>
+#include <fcntl.h>
+
+static int
+command_shell(int argc, char *argv[]) {
+    int fd;
+    struct termios options;
+
+    fd = open(argv[1], O_RDWR | O_NOCTTY);
+    assert(fd > 0);
+
+    tcgetattr(fd, &options);
+    cfsetispeed(&options, B115200);
+    cfsetospeed(&options, B115200);
+    options.c_cflag |= (CLOCAL | CREAD);
+    options.c_cflag &= ~PARENB;
+    options.c_cflag &= ~CSTOPB;
+    options.c_cflag &= ~CSIZE;
+    options.c_cflag |= CS8;
+    options.c_cflag &= ~CRTSCTS;
+    tcsetattr(fd, TCSANOW, &options);
+    close(fd);
+
+    rtems_status_code sc = rtems_shell_init("SHLL", 16 * 1024, 1, argv[1],
+        false, false, NULL);
+    assert(sc == RTEMS_SUCCESSFUL);
+    return 0;
+}
+rtems_shell_cmd_t shell_SHELL_Command = {
+    .name = "shell",
+    .usage = "shell <some tty>",
+    .topic = "x",
+    .command = command_shell,
+};
+
 struct rtems_ftpd_configuration rtems_ftpd_configuration = {
 	/* FTPD task priority */
 	.priority = 100,
@@ -170,9 +205,9 @@ test_main(void)
 	    false, true, NULL);
 	assert(sc == RTEMS_SUCCESSFUL);
 	
-	sc = rtems_shell_init("SRL", 16 * 1024, 1, "/dev/ttyU0",
-	    false, true, NULL);
-	assert(sc == RTEMS_SUCCESSFUL);
+	// sc = rtems_shell_init("SRL", 16 * 1024, 1, "/dev/ttyU0",
+	//     false, true, NULL);
+	// assert(sc == RTEMS_SUCCESSFUL);
 
 	exit(0);
 }
@@ -253,7 +288,8 @@ early_initialization(void)
   &rtems_shell_IFCONFIG_Command, \
   &rtems_shell_IFMCSTAT_Command, \
   &rtems_shell_VMSTAT_Command, \
-  &shell_PATTERN_Command
+  &shell_PATTERN_Command, \
+  &shell_SHELL_Command
 
 #define CONFIGURE_SHELL_COMMAND_CPUINFO
 #define CONFIGURE_SHELL_COMMAND_CPUUSE
