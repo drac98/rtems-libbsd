@@ -84,9 +84,9 @@ __FBSDID("$FreeBSD$");
 #include <sys/priv.h>
 #include <sys/cons.h>
 
-#ifndef __rtems__
+// #ifndef __rtems__
 #include <dev/uart/uart_ppstypes.h>
-#endif /* __rtems__ */
+// #endif /* __rtems__ */
 
 #include <dev/usb/usb.h>
 #include <dev/usb/usbdi.h>
@@ -103,7 +103,7 @@ __FBSDID("$FreeBSD$");
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, ucom, CTLFLAG_RW, 0, "USB ucom");
 
-#ifndef __rtems__
+// #ifndef __rtems__
 static int ucom_pps_mode;
 
 SYSCTL_INT(_hw_usb_ucom, OID_AUTO, pps_mode, CTLFLAG_RWTUN,
@@ -115,10 +115,10 @@ static int ucom_device_mode_console = 1;
 SYSCTL_INT(_hw_usb_ucom, OID_AUTO, device_mode_console, CTLFLAG_RW,
     &ucom_device_mode_console, 0,
     "set to 1 to mark terminals as consoles when in device mode");
-#endif /* __rtems__ */
+// #endif /* __rtems__ */
 
 #ifdef USB_DEBUG
-static int ucom_debug = 0;
+static int ucom_debug = 5;
 
 SYSCTL_INT(_hw_usb_ucom, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ucom_debug, 0, "ucom debug level");
@@ -452,12 +452,12 @@ ucom_attach_tty(struct ucom_super_softc *ssc, struct ucom_softc *sc)
 
 	sc->sc_tty = tp;
 
-#ifndef __rtems__
+// #ifndef __rtems__
 	sc->sc_pps.ppscap = PPS_CAPTUREBOTH;
 	sc->sc_pps.driver_abi = PPS_ABI_VERSION;
 	sc->sc_pps.driver_mtx = sc->sc_mtx;
 	pps_init_abi(&sc->sc_pps);
-#endif /* __rtems__ */
+// #endif /* __rtems__ */
 
 	DPRINTF("ttycreate: %s\n", buf);
 
@@ -1161,9 +1161,9 @@ ucom_cfg_status_change(struct usb_proc_msg *_task)
 	uint8_t new_lsr;
 	uint8_t msr_delta;
 	uint8_t lsr_delta;
-#ifndef __rtems__
+// #ifndef __rtems__
 	uint8_t pps_signal;
-#endif /* __rtems__ */
+// #endif /* __rtems__ */
 
 	tp = sc->sc_tty;
 
@@ -1192,7 +1192,7 @@ ucom_cfg_status_change(struct usb_proc_msg *_task)
 	sc->sc_msr = new_msr;
 	sc->sc_lsr = new_lsr;
 
-#ifndef __rtems__
+// #ifndef __rtems__
 	/*
 	 * Time pulse counting support.
 	 */
@@ -1217,7 +1217,7 @@ ucom_cfg_status_change(struct usb_proc_msg *_task)
 		pps_event(&sc->sc_pps, onoff ? PPS_CAPTUREASSERT :
 		    PPS_CAPTURECLEAR);
 	}
-#endif /* __rtems__ */
+// #endif /* __rtems__ */
 
 	if (msr_delta & SER_DCD) {
 
