@@ -508,6 +508,7 @@ class base(builder.Module):
                 'sys/kern/kern_osd.c',
                 'sys/kern/kern_synch.c',
                 'sys/kern/kern_sysctl.c',
+                'sys/kern/kern_tc.c',
                 'sys/kern/kern_time.c',
                 'sys/kern/kern_timeout.c',
                 'sys/kern/kern_uuid.c',
@@ -889,6 +890,32 @@ class pinmux(builder.Module):
             ],
             mm.generator['source']()
         )
+
+#
+# UART
+#
+class dev_uart(builder.Module):
+
+    def __init__(self, manager):
+        super(dev_uart, self).__init__(manager, type(self).__name__)
+
+    def generate(self):
+        mm = self.manager
+        # self.addDependency('dev_usb')
+        self.addKernelSpaceHeaderFiles(
+            [
+                'sys/sys/timepps.h',
+                'sys/dev/uart/uart_ppstypes.h',
+                'sys/sys/vdso.h',
+                'sys/arm/include/vdso.h',
+            ]
+        )
+        # self.addKernelSpaceSourceFiles(
+        #     [
+        #         'sys/dev/uart/uart_core.c',
+        #     ],
+        #     mm.generator['source']()
+        # )
 
 #
 # USB
@@ -5493,6 +5520,7 @@ def load(mm):
     mm.addModule(pinmux(mm))
     mm.addModule(display(mm))
 
+    mm.addModule(dev_uart(mm))
     mm.addModule(dev_usb(mm))
     mm.addModule(dev_usb_controller(mm))
     mm.addModule(dev_usb_quirk(mm))
