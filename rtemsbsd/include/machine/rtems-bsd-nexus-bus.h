@@ -52,6 +52,7 @@
  *   RTEMS_BSD_DRIVER_USB_MASS
  *   RTEMS_BSD_DRIVER_USB_TEMPLATE
  *   RTEMS_BSD_DRIVER_CDCE
+ *   RTEMS_BSD_DRIVER_CDC_ACM
  *
  *  Networking:
  *   RTEMS_BSD_DRIVER_SMC0
@@ -508,6 +509,17 @@ extern "C" {
   #define RTEMS_BSD_DRIVER_CDCE                   \
     SYSINIT_DRIVER_REFERENCE(cdce, uhub);
 #endif /* RTEMS_BSD_DRIVER_CDCE */
+
+/*
+ * CDC ACM Driver.
+ */
+#if !defined(RTEMS_BSD_DRIVER_CDC_ACM)
+  #define RTEMS_BSD_DRIVER_CDC_ACM                \
+    SYSINIT_REFERENCE(modem_init);                \
+    SYSINIT_REFERENCE(ucom_init);                 \
+    SYSINIT_DRIVER_REFERENCE(ucom, usb);          \
+    SYSINIT_DRIVER_REFERENCE(g_modem, uhub)
+#endif /* RTEMS_BSD_DRIVER_CDC_ACM */
 
 /**
  ** MMI Physical Layer Support.
