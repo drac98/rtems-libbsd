@@ -118,7 +118,7 @@ SYSCTL_INT(_hw_usb_ucom, OID_AUTO, device_mode_console, CTLFLAG_RW,
 // #endif /* __rtems__ */
 
 #ifdef USB_DEBUG
-static int ucom_debug = 5;
+static int ucom_debug = 15;
 
 SYSCTL_INT(_hw_usb_ucom, OID_AUTO, debug, CTLFLAG_RWTUN,
     &ucom_debug, 0, "ucom debug level");

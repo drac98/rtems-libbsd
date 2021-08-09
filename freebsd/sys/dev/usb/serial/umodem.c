@@ -114,7 +114,7 @@ __FBSDID("$FreeBSD$");
 #include <dev/usb/serial/usb_serial.h>
 
 #ifdef USB_DEBUG
-static int umodem_debug = 0;
+static int umodem_debug = 15;
 
 static SYSCTL_NODE(_hw_usb, OID_AUTO, umodem, CTLFLAG_RW, 0, "USB umodem");
 SYSCTL_INT(_hw_usb_umodem, OID_AUTO, debug, CTLFLAG_RWTUN,
