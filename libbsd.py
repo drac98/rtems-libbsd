@@ -1182,6 +1182,30 @@ class dev_usb_template(builder.Module):
             [
                 'sys/dev/usb/template/usb_template.c',
                 'sys/dev/usb/template/usb_template_cdce.c',
+                'sys/dev/usb/template/usb_template_modem.c',
+            ],
+            mm.generator['source']()
+        )
+
+#
+# USB Gadget
+#
+class dev_usb_gadget(builder.Module):
+
+    def __init__(self, manager):
+        super(dev_usb_gadget, self).__init__(manager, type(self).__name__)
+
+    def generate(self):
+        mm = self.manager
+        self.addDependency('dev_usb')
+        self.addKernelSpaceHeaderFiles(
+            [
+                'sys/dev/usb/gadget/g_modem.h',
+            ]
+        )
+        self.addKernelSpaceSourceFiles(
+            [
+                'sys/dev/usb/gadget/g_modem.c',
             ],
             mm.generator['source']()
         )
@@ -5503,6 +5527,7 @@ def load(mm):
     mm.addModule(dev_wlan_rtwn(mm))
 
     mm.addModule(cam(mm))
+    mm.addModule(dev_usb_gadget(mm))
     mm.addModule(dev_usb_storage(mm))
     mm.addModule(dev_usb_template(mm))
     mm.addModule(dev_usb_controller_bbb(mm))
