@@ -62,6 +62,8 @@ __FBSDID("$FreeBSD$");
 #include <rtems/bsd/local/usb_if.h>
 
 #define	USB_DEBUG_VAR g_modem_debug
+#define USB_DEBUG
+
 #include <dev/usb/usb_debug.h>
 
 #include <dev/usb/gadget/g_modem.h>
@@ -98,7 +100,7 @@ static SYSCTL_NODE(_hw_usb, OID_AUTO, g_modem, CTLFLAG_RW | CTLFLAG_MPSAFE, 0,
     "USB modem gadget");
 
 #ifdef USB_DEBUG
-static int g_modem_debug = 0;
+static int g_modem_debug = 15;
 
 SYSCTL_INT(_hw_usb_g_modem, OID_AUTO, debug, CTLFLAG_RWTUN,
     &g_modem_debug, 0, "Debug level");
