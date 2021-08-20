@@ -41,6 +41,9 @@
 #ifndef _USB_STANDARD_H_
 #define	_USB_STANDARD_H_
 
+#define USB_DEBUG_VAR
+#define USB_DEBUG
+
 #if defined(_KERNEL)
 #ifndef USB_GLOBAL_INCLUDE_FILE
 #include <rtems/bsd/local/opt_usb.h>
